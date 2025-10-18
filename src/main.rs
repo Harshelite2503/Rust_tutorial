@@ -2,7 +2,7 @@
     let x: i32 = 1;
     println!("Hello, world!");
     // BY default everything is immutable in Rust
-    let mut result: i32 = sum(127, 1);
+    let result: i32 = sum(127, 1);
     println!("The value of x is: {}", x);
     let z: f32 = 2.0;
     println!("The value of result is: {}", result);
@@ -12,8 +12,8 @@
     let greeting: String = String::from("Hello, Rust!");
     println!("{}", greeting);
 
-    let isEven: bool = true;
-    if isEven {
+    let is_even: bool = true;
+    if is_even {
         println!("The number is even.");
     } else {
         println!("The number is odd.");
@@ -32,7 +32,29 @@
     heap_fun();
     update_string(); 
 
+    // Ownership in Rust
+    /*
+    Set of rules that govern how a Rust program manages memory. Ownership is a key concept in Rust that ensures memory safety without needing a garbage collector.
 
+    1. Each value in Rust has a variable that’s called its owner.
+    2. There can only be one owner at a time.
+    3. When the owner goes out of scope, the value will be dropped.
+
+
+     */
+    let s1 = String::from("Ownership in Rust");
+    let _s2 = s1; // s1 is moved to s2, s1 is no longer valid as it might create dangling pointer/double free error issues in future
+    // println!("{}", s1); // This would cause a compile-time error because s2 ke paas ownership hai ab
+
+    let mut my_string = String::from("Hello");
+    my_string = some_fun(my_string);
+    println!("{}", my_string);
+
+
+}
+fn some_fun(some_string: String) -> String {
+    println!("Inside some_fun: {}", some_string);
+    return some_string;
 }
 
 fn stack_fun() {
@@ -55,9 +77,10 @@ fn update_string() {
     println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
 
     // Append some text to the string
-    for _ in 0..100{
+    for _ in 0..5{
         s.push_str(" and some additional text");
         // println!("After update: {}", s);
+        // You can increase the for loop count to see how pointer location changes after some point
         println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
     }
 }
