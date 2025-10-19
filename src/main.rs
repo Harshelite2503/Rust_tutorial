@@ -32,7 +32,7 @@
     heap_fun();
     update_string(); 
 
-    // Ownership in Rust
+    // Ownership in Rustb 
     /*
     Set of rules that govern how a Rust program manages memory. Ownership is a key concept in Rust that ensures memory safety without needing a garbage collector.
 
@@ -50,8 +50,26 @@
     my_string = some_fun(my_string);
     println!("{}", my_string);
 
+    // Referencing
+    let s3 = String::from("Hello, references!");
+    take_ownership(&s3);
+    println!("{}", s3); // This is valid because we passed a reference and ownership was not moved
+
+    // multiple borrowers allowed, unless no hanky panky
+    let s4 = &s3;
+    let s5 = &s3;
+    let s6 = &s3;
+    let s7 = &s3;
+    let s8 = &s3;
+
+    println!("Multiple references: {}, {}, {}, {}, {}", s4, s5, s6, s7, s8);
 
 }
+
+fn take_ownership(some_string: &String) {
+    println!("Inside take_ownership: {}", some_string);
+} // some_string goes out of scope here and is dropped
+
 fn some_fun(some_string: String) -> String {
     println!("Inside some_fun: {}", some_string);
     return some_string;
